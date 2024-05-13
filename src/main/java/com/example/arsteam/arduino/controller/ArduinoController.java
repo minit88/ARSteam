@@ -21,7 +21,7 @@ public class ArduinoController {
 
     // 디바이스 측정값 조회
     @GetMapping
-    public ResponseEntity getData(@Param("deviceId") long deviceId){
+    public ResponseEntity getData(@RequestParam(value = "deviceId",defaultValue ="1") long deviceId){
         ArduinoDto.GetResponseDto responseDto = arduinoService.getData(deviceId);
 
         return new ResponseEntity(responseDto, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class ArduinoController {
 
     // 습도 저장
     @PatchMapping("/data/humidity")
-    public ResponseEntity updateHumidity(@RequestParam("deviceId") long deviceId, @RequestParam("humidity") long humidity){
+    public ResponseEntity updateHumidity(@RequestParam(value = "deviceId",defaultValue ="1") long deviceId, @RequestParam("humidity") long humidity){
         ArduinoDto.DataResponseDto responseDto = arduinoService.updateHumidity(deviceId,humidity);
 
         return new ResponseEntity(responseDto,HttpStatus.OK);
@@ -45,7 +45,7 @@ public class ArduinoController {
 
     // 기온 저장
     @PatchMapping("/data/temperature")
-    public ResponseEntity updateTemperature(@RequestParam("deviceId") long deviceId,@RequestParam("temperature") long temperature){
+    public ResponseEntity updateTemperature(@RequestParam(value = "deviceId",defaultValue ="1") long deviceId,@RequestParam("temperature") long temperature){
         ArduinoDto.DataResponseDto responseDto = arduinoService.updateTemperature(deviceId,temperature);
 
         return new ResponseEntity(responseDto,HttpStatus.OK);
@@ -53,7 +53,7 @@ public class ArduinoController {
 
     // 토양 수분 저장
     @PatchMapping("/data/soilMoisture")
-    public ResponseEntity updateSoilMoisture(@RequestParam("deviceId") long deviceId,@RequestParam("soilMoisture") long soilMoisture){
+    public ResponseEntity updateSoilMoisture(@RequestParam(value = "deviceId",defaultValue ="1") long deviceId,@RequestParam("soilMoisture") long soilMoisture){
         ArduinoDto.DataResponseDto responseDto = arduinoService.updateSoilMoisture(deviceId,soilMoisture);
 
         return new ResponseEntity(responseDto,HttpStatus.OK);
@@ -61,26 +61,10 @@ public class ArduinoController {
 
     // 수위 저장
     @PatchMapping("/data/waterLevel")
-    public ResponseEntity updateWaterLevel(@RequestParam("deviceId") long deviceId,@RequestParam("temperature") long waterLevel){
+    public ResponseEntity updateWaterLevel(@RequestParam(value = "deviceId",defaultValue ="1") long deviceId,@RequestParam("temperature") long waterLevel){
         ArduinoDto.DataResponseDto responseDto = arduinoService.updateWaterLevel(deviceId,waterLevel);
 
         return new ResponseEntity(responseDto,HttpStatus.OK);
     }
 
-    // 상의 더 해봐야 할듯
-    /*
-    @PatchMapping("/data/waterPump")
-    public ResponseEntity updateHumidity(){
-
-    }
-    @PatchMapping("/data/led")
-    public ResponseEntity updateHumidity(){
-
-    }
-    @PatchMapping("/data/coolingFan")
-    public ResponseEntity updateHumidity(){
-
-    }
-
-     */
 }

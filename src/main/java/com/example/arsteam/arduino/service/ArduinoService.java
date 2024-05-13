@@ -44,7 +44,7 @@ public class ArduinoService {
     // 해당 디바이스의 메타데이터 확인
     public ArduinoDto.GetResponseDto getData(long deviceId){
 
-        return arduinoMapper.dtoToGetResponseDto(findDevice(deviceId),findData(deviceId));
+        return arduinoMapper.dtoToGetResponseDto(findDevice(deviceId));
     }
 
     // 디바이스 신규 등록
@@ -100,5 +100,45 @@ public class ArduinoService {
         return arduinoMapper.measuresToDataResponseDto(measures);
     }
 
-    // 워터 펌프 동작
+    // switch status waterPump
+    public ArduinoDto.GetResponseDto switchingStatusWaterPump(long deviceId){
+        Measures measures = findData(deviceId);
+
+        if (measures.isWaterPump()==true){
+            measures.setWaterPump(false);
+        }
+        else{
+            measures.setWaterPump(true);
+        }
+        arduinoMeasuresRepository.save(measures);
+        return arduinoMapper.dtoToGetResponseDto(deviceId,measures);
+    }
+
+    // switch status coolingFan
+    public ArduinoDto.GetResponseDto switchingStatusCoolingFan(long deviceId){
+        Measures measures = findData(deviceId);
+
+        if (measures.isCoolingFan()==true){
+            measures.setCoolingFan(false);
+        }
+        else{
+            measures.setCoolingFan(true);
+        }
+        arduinoMeasuresRepository.save(measures);
+        return arduinoMapper.dtoToGetResponseDto(deviceId,measures);
+    }
+
+    // switch status led
+    public ArduinoDto.GetResponseDto switchingStatusLed(long deviceId){
+        Measures measures = findData(deviceId);
+
+        if (measures.isLed()==true){
+            measures.setLed(false);
+        }
+        else{
+            measures.setLed(true);
+        }
+        arduinoMeasuresRepository.save(measures);
+        return arduinoMapper.dtoToGetResponseDto(deviceId,measures);
+    }
 }

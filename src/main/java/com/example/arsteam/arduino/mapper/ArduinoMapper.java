@@ -20,11 +20,33 @@ public interface ArduinoMapper {
         return deviceResponseDto;
     }
 
-    default   ArduinoDto.GetResponseDto dtoToGetResponseDto(Device device , Measures measures){
-        ArduinoDto.GetResponseDto responseDto = new ArduinoDto.GetResponseDto();
+    default   ArduinoDto.GetResponseDto dtoToGetResponseDto(Device device){
+        Measures measures = device.getMeasures();
+        ArduinoDto.GetResponseDto responseDto = ArduinoDto.GetResponseDto.builder()
+                .deviceId(device.getDeviceId())
+                .humidity(measures.getHumidity())
+                .temperature(measures.getTemperature())
+                .soilMoisture(measures.getSoilMoisture())
+                .waterLevel(measures.getWaterLevel())
+                .waterPump(measures.isWaterPump())
+                .led(measures.isLed())
+                .coolingFan(measures.isCoolingFan())
+                .build();
 
-        responseDto.setDevice(device);
-        responseDto.setMeasures(measures);
+        return responseDto;
+    }
+    default   ArduinoDto.GetResponseDto dtoToGetResponseDto(long deviceId,Measures measures){
+
+        ArduinoDto.GetResponseDto responseDto = ArduinoDto.GetResponseDto.builder()
+                .deviceId(deviceId)
+                .humidity(measures.getHumidity())
+                .temperature(measures.getTemperature())
+                .soilMoisture(measures.getSoilMoisture())
+                .waterLevel(measures.getWaterLevel())
+                .waterPump(measures.isWaterPump())
+                .led(measures.isLed())
+                .coolingFan(measures.isCoolingFan())
+                .build();
 
         return responseDto;
     }
