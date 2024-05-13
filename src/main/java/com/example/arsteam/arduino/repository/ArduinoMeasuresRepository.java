@@ -13,5 +13,5 @@ public interface ArduinoMeasuresRepository extends JpaRepository<Measures, Long>
 
     // 특정 디바이스의 측정값 검색
     @Query("SELECT m From Measures m WHERE m.device.deviceId = :deviceId")
-    Optional<Measures> findByDeviceId(@Param("deviceId") String deviceId);
+    Optional<Measures> findByDeviceId(@Param("deviceId") long deviceId);
 }

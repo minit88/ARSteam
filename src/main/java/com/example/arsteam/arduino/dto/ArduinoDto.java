@@ -12,7 +12,7 @@ public class ArduinoDto {
     @Getter
     @Setter
     public static class DeviceResponseDto{
-        private String deviceId;
+        private long deviceId;
         private LocalDateTime createAt;
     }
     @Getter

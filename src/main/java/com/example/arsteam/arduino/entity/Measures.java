@@ -14,6 +14,7 @@ import org.springframework.lang.Nullable;
 public class Measures {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long measureId;
     private long humidity;
     private long temperature;
@@ -22,10 +23,6 @@ public class Measures {
     private boolean waterPump ;
     private boolean led ;
     private boolean coolingFan ;
-
-    @OneToOne
-    @JoinColumn(name = "deviceId")
-    Device device;
 
 
     public boolean isLed(){
@@ -39,4 +36,8 @@ public class Measures {
     public boolean isCoolingFan(){
         return coolingFan;
     }
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "device_id")
+    private Device device;
 }

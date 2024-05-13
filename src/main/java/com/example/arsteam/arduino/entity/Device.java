@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 public class Device {
 
     @Id
-    private String deviceId;
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    private long deviceId;
     private LocalDateTime createAt;
 
 
-    @OneToOne
-    @JoinColumn(name = "measureId")
+    @OneToOne(mappedBy = "device", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Measures measures ;
 }

@@ -13,6 +13,6 @@ public interface ArduinoDeviceRepository extends JpaRepository<Device,String> {
 
     // 특정 디바이스 검색
     @Query("SELECT d FROM Device d WHERE d.deviceId = :deviceId")
-    Optional<Device> findByDeviceId(@Param("deviceId") String deviceId);
+    Optional<Device> findByDeviceId(@Param("deviceId") long deviceId);
 
 }

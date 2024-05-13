@@ -27,14 +27,14 @@ public class ArduinoService {
         this.arduinoMapper = arduinoMapper;
     }
 
-    public Device findDevice(String deviceId){
+    public Device findDevice(long deviceId){
         Device device =  arduinoDeviceRepository.findByDeviceId(deviceId)
                 .orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_DEVICE));
 
         return device;
     }
 
-    public Measures findData(String deviceId){
+    public Measures findData(long deviceId){
         Measures measures = arduinoMeasuresRepository.findByDeviceId(deviceId)
                 .orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_MEASURES));
 
@@ -42,25 +42,25 @@ public class ArduinoService {
     }
 
     // 해당 디바이스의 메타데이터 확인
-    public ArduinoDto.GetResponseDto getData(String deviceId){
+    public ArduinoDto.GetResponseDto getData(long deviceId){
 
         return arduinoMapper.dtoToGetResponseDto(findDevice(deviceId),findData(deviceId));
     }
 
     // 디바이스 신규 등록
-    public ArduinoDto.DeviceResponseDto postDevice(String deviceId){
+    public ArduinoDto.DeviceResponseDto postDevice(){
         Device device = new Device();
-        Measures measures = new Measures().builder().device(device).build();
-        device.setDeviceId(deviceId);
         device.setCreateAt(LocalDateTime.now());
-        arduinoDeviceRepository.save(device);
+        device = arduinoDeviceRepository.save(device);
+        Measures measures = new Measures().builder().device(device).build();
+
         arduinoMeasuresRepository.save(measures);
 
         return arduinoMapper.deviceToDeviceResponseDto(device);
     }
 
     // 습도 저장
-    public ArduinoDto.DataResponseDto updateHumidity(String deviceId,Long humidity){
+    public ArduinoDto.DataResponseDto updateHumidity(long deviceId,Long humidity){
         Measures measures = findData(deviceId);
 
         measures.setHumidity(measures.getHumidity());
@@ -70,7 +70,7 @@ public class ArduinoService {
     }
 
     // 기온 저장
-    public ArduinoDto.DataResponseDto updateTemperature(String deviceId,Long temperature){
+    public ArduinoDto.DataResponseDto updateTemperature(long deviceId,Long temperature){
         Measures measures = findData(deviceId);
 
         measures.setTemperature(temperature);
@@ -81,7 +81,7 @@ public class ArduinoService {
 
 
     // 토양 수분 저장
-    public ArduinoDto.DataResponseDto updateSoilMoisture(String deviceId,Long soilMoisture){
+    public ArduinoDto.DataResponseDto updateSoilMoisture(long deviceId,Long soilMoisture){
         Measures measures = findData(deviceId);
 
         measures.setSoilMoisture(soilMoisture);
@@ -91,7 +91,7 @@ public class ArduinoService {
     }
 
     // 수위 저장
-    public ArduinoDto.DataResponseDto updateWaterLevel(String deviceId,Long waterLevel){
+    public ArduinoDto.DataResponseDto updateWaterLevel(long deviceId,Long waterLevel){
         Measures measures = findData(deviceId);
 
         measures.setWaterLevel(waterLevel);
